@@ -1,9 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#define RED 12
-#define GREEN 13
-#define BLUE 14
+#include <string>
+
+const int NUM_RED = 12;
+const int NUM_GREEN = 13;
+const int NUM_BLUE = 14;
 
 bool isPossibleCube(std::string cube)
 {
@@ -11,13 +13,18 @@ bool isPossibleCube(std::string cube)
     std::string number = cube.substr(0, space_pos);
     std::string color = cube.substr(space_pos + 1);
 
-    if (color == "red" && stoi(number) > RED)
+    if (color == "red" && stoi(number) > NUM_RED)
+    {
         return false;
-    if (color == "green" && stoi(number) > GREEN)
+    }
+    if (color == "green" && stoi(number) > NUM_GREEN)
+    {
         return false;
-    if (color == "blue" && stoi(number) > BLUE)
+    }
+    if (color == "blue" && stoi(number) > NUM_BLUE)
+    {
         return false;
-
+    }
     return true;
 }
 
@@ -53,7 +60,7 @@ bool isPossibleGame(std::string game)
     return isPossibleTurn(game);
 }
 
-int sumPossibleGames(std::string filename)
+int sumPossibleGames(const std::string &filename)
 {
     int sum = 0;
     std::string text;
