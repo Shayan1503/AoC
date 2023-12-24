@@ -1,10 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <string>
 
-using namespace std;
-
-map<string, int> ntoi = {
+std::map<std::string, int> ntoi = {
     {"one", 1},
     {"two", 2},
     {"three", 3},
@@ -15,16 +14,16 @@ map<string, int> ntoi = {
     {"eight", 8},
     {"nine", 9}};
 
-int getNumber(string str)
+int getNumber(std::string str)
 {
     int n = str.size();
 
     // finding the leftmost digit from substring
-    size_t leftpos = str.size();
+    std::size_t leftpos = str.size();
     int left = 0;
     for (auto i : ntoi)
     {
-        size_t currpos = str.find(i.first);
+        std::size_t currpos = str.find(i.first);
         if (currpos != str.npos && currpos < leftpos)
         {
             leftpos = currpos;
@@ -43,11 +42,11 @@ int getNumber(string str)
     }
 
     // finding the rightmost digit from substring
-    size_t rightpos = 0;
+    std::size_t rightpos = 0;
     int right = 0;
     for (auto i : ntoi)
     {
-        size_t currpos = str.rfind(i.first);
+        std::size_t currpos = str.rfind(i.first);
         // cout << currpos << " " << i.first << " ";
         if (currpos != str.npos && currpos > rightpos)
         {
@@ -69,16 +68,16 @@ int getNumber(string str)
     return left * 10 + right;
 }
 
-int getCalibratedSum(string filename)
+int getCalibratedSum(std::string filename)
 {
-    string text;
-    ifstream file(filename);
+    std::string text;
+    std::ifstream file(filename);
     int sum = 0;
 
     while (getline(file, text))
     {
         int number = getNumber(text);
-        cout << text << " - " << number << "\n";
+        std::cout << text << " - " << number << "\n";
         sum += number;
     }
     return sum;
@@ -87,5 +86,5 @@ int getCalibratedSum(string filename)
 int main()
 {
     int sum = getCalibratedSum("input.txt");
-    cout << "Answer:" << sum << endl;
+    std::cout << "Answer:" << sum << std::endl;
 }

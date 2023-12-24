@@ -1,12 +1,11 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 
-using namespace std;
-
-int getSum(string filename)
+int getSum(std::string filename)
 {
-    string text;
-    ifstream file(filename);
+    std::string text;
+    std::ifstream file(filename);
     int sum = 0;
 
     while (getline(file, text))
@@ -33,7 +32,7 @@ int getSum(string filename)
         }
 
         int number = (first - '0') * 10 + (last - '0');
-        cout << text << " - " << number << "\n";
+        std::cout << text << " - " << number << "\n";
         sum += number;
     }
 
@@ -43,5 +42,5 @@ int getSum(string filename)
 int main()
 {
     int total = getSum("input.txt");
-    cout << "Answer: " << total << endl;
+    std::cout << "Answer: " << total << std::endl;
 }
