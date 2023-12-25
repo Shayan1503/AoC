@@ -2,6 +2,7 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include <chrono>
 
 std::map<std::string, int> ntoi = {
     {"one", 1},
@@ -77,7 +78,7 @@ int getCalibratedSum(std::string filename)
     while (getline(file, text))
     {
         int number = getNumber(text);
-        std::cout << text << " - " << number << "\n";
+        // std::cout << text << " - " << number << "\n";
         sum += number;
     }
     return sum;
@@ -85,6 +86,13 @@ int getCalibratedSum(std::string filename)
 
 int main()
 {
+    auto start = std::chrono::high_resolution_clock::now();
+
     int sum = getCalibratedSum("input.txt");
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
     std::cout << "Answer:" << sum << std::endl;
+    std::cout << "Execution time: " << duration.count() << " microseconds" << std::endl;
 }

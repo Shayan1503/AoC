@@ -1,8 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <chrono>
 
-int getSum(std::string filename)
+int getSum(const std::string &filename)
 {
     std::string text;
     std::ifstream file(filename);
@@ -32,7 +33,7 @@ int getSum(std::string filename)
         }
 
         int number = (first - '0') * 10 + (last - '0');
-        std::cout << text << " - " << number << "\n";
+        // std::cout << text << " - " << number << "\n";
         sum += number;
     }
 
@@ -41,6 +42,13 @@ int getSum(std::string filename)
 
 int main()
 {
+    auto start = std::chrono::high_resolution_clock::now();
+
     int total = getSum("input.txt");
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
     std::cout << "Answer: " << total << std::endl;
+    std::cout << "Execution Time: " << duration.count() << " microseconds" << std::endl;
 }

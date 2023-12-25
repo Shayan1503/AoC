@@ -1,70 +1,49 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
+#include <sstream>
 #include <string>
+#include <map>
+#include <chrono>
 
-const int NUM_RED = 12;
-const int NUM_GREEN = 13;
-const int NUM_BLUE = 14;
+const std::map<std::string, int> color_numbers = {{"red", 12}, {"green", 13}, {"blue", 14}};
 
-bool isPossibleCube(std::string cube)
+bool isPossibleCube(const std::string &cube)
 {
-    std::size_t space_pos = cube.find(" ");
-    std::string number = cube.substr(0, space_pos);
-    std::string color = cube.substr(space_pos + 1);
+    std::istringstream iss(cube);
+    std::string number, color;
+    iss >> number >> color;
+    return stoi(number) <= color_numbers.at(color);
+}
 
-    if (color == "red" && stoi(number) > NUM_RED)
+bool isPossibleTurn(const std::string &turn)
+{
+    std::istringstream iss(turn);
+    std::string cube;
+    while (std::getline(iss, cube, ','))
     {
-        return false;
-    }
-    if (color == "green" && stoi(number) > NUM_GREEN)
-    {
-        return false;
-    }
-    if (color == "blue" && stoi(number) > NUM_BLUE)
-    {
-        return false;
+        if (!isPossibleCube(cube))
+            return false;
     }
     return true;
 }
 
-bool isPossibleTurn(std::string turn)
+bool isPossibleGame(const std::string &game)
 {
-    std::size_t cube_pos = turn.find(",");
-
-    while (cube_pos != turn.npos)
+    std::istringstream iss(game);
+    std::string turn;
+    while (std::getline(iss, turn, ';'))
     {
-        if (!isPossibleCube(turn.substr(0, cube_pos)))
+        if (!isPossibleTurn(turn))
             return false;
-
-        turn = turn.substr(cube_pos + 2);
-        cube_pos = turn.find(",");
     }
-    // for the single cube left
-    return isPossibleCube(turn);
-}
-
-bool isPossibleGame(std::string game)
-{
-    std::size_t turn_pos = game.find(";");
-
-    while (turn_pos != game.npos)
-    {
-        if (!isPossibleTurn(game.substr(0, turn_pos)))
-            return false;
-        game = game.substr(turn_pos + 2);
-        turn_pos = game.find(";");
-    }
-
-    // for the last turn
-    return isPossibleTurn(game);
+    return true;
 }
 
 int sumPossibleGames(const std::string &filename)
 {
     int sum = 0;
-    std::string text;
     std::ifstream file(filename);
+    std::string text;
     int game = 1;
 
     while (std::getline(file, text))
@@ -83,6 +62,13 @@ int sumPossibleGames(const std::string &filename)
 
 int main()
 {
+    auto start = std::chrono::high_resolution_clock::now();
+
     int sum_of_ids = sumPossibleGames("input.txt");
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
     std::cout << "Answer: " << sum_of_ids << std::endl;
+    std::cout << "Execution time: " << duration.count() << " microseconds" << std::endl;
 }

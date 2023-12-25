@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <chrono>
 
 void findMinimumSet(std::string turn, int *minimum_cubes)
 {
@@ -86,6 +88,13 @@ int sumOfPower(const std::string &filename)
 
 int main()
 {
+    auto start = std::chrono::high_resolution_clock::now();
+
     int total = sumOfPower("input.txt");
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
     std::cout << "Answer: " << total << std::endl;
+    std::cout << "Took " << duration.count() << " microseconds." << std::endl;
 }
