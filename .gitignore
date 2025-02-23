@@ -1,2 +1,6 @@
 # vscode files
 .vscode/*
+
+# executables
+a.out
+part*
