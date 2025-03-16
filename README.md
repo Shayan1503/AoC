@@ -24,8 +24,8 @@ A collection of my solutions to [Advent of Code](https://adventofcode.com/) chal
 
 1. Clone this repository
    ```bash
-   git clone https://github.com/Shayan1503/AoC
-   cd aoc-solutions
+   git clone https://github.com/Shayan1503/AoC.git
+   cd AoC
    ```
 
 2. Compile the main runner
