@@ -15,28 +15,23 @@ std::map<std::string, int> ntoi = {
     {"eight", 8},
     {"nine", 9}};
 
-int getNumber(std::string str)
-{
+int getNumber(std::string str) {
     int n = str.size();
 
     // finding the leftmost digit from substring
     std::size_t leftpos = str.size();
     int left = 0;
-    for (auto i : ntoi)
-    {
+    for (auto i : ntoi) {
         std::size_t currpos = str.find(i.first);
-        if (currpos != str.npos && currpos < leftpos)
-        {
+        if (currpos != str.npos && currpos < leftpos) {
             leftpos = currpos;
             left = i.second;
         }
     }
 
     // checking if the leftmost digit is in alphanum form instead
-    for (int i = 0; i < n; i++)
-    {
-        if (isdigit(str[i]) && i < leftpos)
-        {
+    for (int i = 0; i < n; i++) {
+        if (isdigit(str[i]) && i < leftpos) {
             left = str[i] - '0';
             break;
         }
@@ -45,22 +40,18 @@ int getNumber(std::string str)
     // finding the rightmost digit from substring
     std::size_t rightpos = 0;
     int right = 0;
-    for (auto i : ntoi)
-    {
+    for (auto i : ntoi) {
         std::size_t currpos = str.rfind(i.first);
         // cout << currpos << " " << i.first << " ";
-        if (currpos != str.npos && currpos > rightpos)
-        {
+        if (currpos != str.npos && currpos > rightpos) {
             rightpos = currpos;
             right = i.second;
         }
     }
 
     // checking if the rightmost digit is in alphanum form instead
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (isdigit(str[i]) && i >= rightpos)
-        {
+    for (int i = n - 1; i >= 0; i--) {
+        if (isdigit(str[i]) && i >= rightpos) {
             right = str[i] - '0';
             break;
         }
@@ -69,14 +60,12 @@ int getNumber(std::string str)
     return left * 10 + right;
 }
 
-int getCalibratedSum(std::string filename)
-{
+int getCalibratedSum(std::string filename) {
     std::string text;
     std::ifstream file(filename);
     int sum = 0;
 
-    while (getline(file, text))
-    {
+    while (getline(file, text)) {
         int number = getNumber(text);
         // std::cout << text << " - " << number << "\n";
         sum += number;
@@ -84,8 +73,7 @@ int getCalibratedSum(std::string filename)
     return sum;
 }
 
-int main()
-{
+int main() {
     auto start = std::chrono::high_resolution_clock::now();
 
     int sum = getCalibratedSum("input.txt");

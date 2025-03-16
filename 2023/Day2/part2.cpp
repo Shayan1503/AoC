@@ -3,27 +3,20 @@
 #include <string>
 #include <chrono>
 
-void findMinimumSet(std::string turn, int *minimum_cubes)
-{
+void findMinimumSet(std::string turn, int *minimum_cubes) {
     std::size_t cube_pos = turn.find(",");
-    while (cube_pos != turn.npos)
-    {
+    while (cube_pos != turn.npos) {
         std::string cube = turn.substr(0, cube_pos);
 
         std::size_t space_pos = cube.find(" ");
         int cube_no = stoi(cube.substr(0, space_pos));
         std::string cube_col = cube.substr(space_pos + 1);
 
-        if (cube_col == "red" && cube_no > minimum_cubes[0])
-        {
+        if (cube_col == "red" && cube_no > minimum_cubes[0]) {
             minimum_cubes[0] = cube_no;
-        }
-        else if (cube_col == "green" && cube_no > minimum_cubes[1])
-        {
+        } else if (cube_col == "green" && cube_no > minimum_cubes[1]) {
             minimum_cubes[1] = cube_no;
-        }
-        else if (cube_col == "blue" && cube_no > minimum_cubes[2])
-        {
+        } else if (cube_col == "blue" && cube_no > minimum_cubes[2]){
             minimum_cubes[2] = cube_no;
         }
 
@@ -35,27 +28,20 @@ void findMinimumSet(std::string turn, int *minimum_cubes)
     int cube_no = stoi(turn.substr(0, space_pos));
     std::string cube_col = turn.substr(space_pos + 1);
 
-    if (cube_col == "red" && cube_no > minimum_cubes[0])
-    {
+    if (cube_col == "red" && cube_no > minimum_cubes[0]) {
         minimum_cubes[0] = cube_no;
-    }
-    else if (cube_col == "green" && cube_no > minimum_cubes[1])
-    {
+    } else if (cube_col == "green" && cube_no > minimum_cubes[1]) {
         minimum_cubes[1] = cube_no;
-    }
-    else if (cube_col == "blue" && cube_no > minimum_cubes[2])
-    {
+    } else if (cube_col == "blue" && cube_no > minimum_cubes[2]) {
         minimum_cubes[2] = cube_no;
     }
 }
 
-int getPower(std::string game)
-{
+int getPower(std::string game) {
     int minimum_cubes[] = {0, 0, 0};
 
     std::size_t turn_pos = game.find(";");
-    while (turn_pos != game.npos)
-    {
+    while (turn_pos != game.npos) {
         std::string turn = game.substr(0, turn_pos);
 
         findMinimumSet(turn, minimum_cubes);
@@ -69,14 +55,12 @@ int getPower(std::string game)
     return minimum_cubes[0] * minimum_cubes[1] * minimum_cubes[2];
 }
 
-int sumOfPower(const std::string &filename)
-{
+int sumOfPower(const std::string &filename) {
     int sum = 0;
     std::string text;
     std::ifstream file(filename);
 
-    while (std::getline(file, text))
-    {
+    while (std::getline(file, text)) {
         std::size_t found = text.find(":");
         text = text.substr(found + 2);
 
@@ -86,8 +70,7 @@ int sumOfPower(const std::string &filename)
     return sum;
 }
 
-int main()
-{
+int main() {
     auto start = std::chrono::high_resolution_clock::now();
 
     int total = sumOfPower("input.txt");

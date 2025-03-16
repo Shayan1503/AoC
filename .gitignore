@@ -2,5 +2,6 @@
 .vscode/*
 
 # executables
-a.out
+a*
 part*
+main*
