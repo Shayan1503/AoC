@@ -1,8 +1,6 @@
 #include <iostream>
 #include <chrono>
-#include <format>
 #include <filesystem>
-#include <cstdlib>
 #include <sstream>
 #include <string>
 
@@ -34,25 +32,25 @@ void compileAndRun(const std::string& year, const std::string& day, const std::s
 
   std::cout << "Compiling..." << std::endl;
   std::string compileCommand = "g++ -std=c++20 part" + part + ".cpp -o " + outputName;
-    
+
   try {
     std::string compileOutput = executeCommand(compileCommand, workDir);
     if (!compileOutput.empty()) {
       std::cout << "Compilation output:\n" << compileOutput << std::endl;
     }
-        
+
     if (!std::filesystem::exists(workDir + "/" + outputName)) {
       std::cout << "Compilation failed!" << std::endl;
       return;
     }
-        
+
     std::cout << "\nExecuting solution...\n" << std::endl;
-        
+
     std::string runCommand = "./" + outputName;
     #ifdef _WIN32
       runCommand += ".exe";
     #endif
-        
+
     std::string output = executeCommand(runCommand, workDir);
     std::cout << output;
 
@@ -62,11 +60,21 @@ void compileAndRun(const std::string& year, const std::string& day, const std::s
   }
 }
 
-bool fileIsInvalid(std::string year, std::string day, std::string part) {
-  const auto now = std::chrono::system_clock::now();
-  std::string current_year = std::format("{:%Y}", now);
+bool fileIsInvalid(const std::string& year, const std::string& day, const std::string& part) {
+  auto now = std::chrono::system_clock::now();
+  std::time_t t = std::chrono::system_clock::to_time_t(now);
+  std::tm tm = *std::localtime(&t);
+  std::ostringstream oss;
+  oss << std::put_time(&tm, "%Y");
+  std::string current_year = oss.str();
 
-  if(stoi(year) > stoi(current_year)) {
+  int input_year;
+  try {
+    input_year = std::stoi(year);
+  } catch (...) {
+    return true;
+  }
+  if (input_year > std::stoi(current_year)) {
     return true;
   }
 
@@ -81,7 +89,7 @@ int main() {
 
   std::cout << "\033[1;31m ________\033[0m  ________  \033[1;32m________\033[0m\n";
   std::cout << "\033[1;31m|\\   __  \\\033[0m|\\   __  \\\033[1;32m|\\   ____\\\033[0m\n";
-  std::cout << "\033[1;31m\\ \\  \\|\\  \\\033[0m \\  \\|\\  \\ \033[1;32m\\  \\___|\033[0m\n"; 
+  std::cout << "\033[1;31m\\ \\  \\|\\  \\\033[0m \\  \\|\\  \\ \033[1;32m\\  \\___|\033[0m\n";
   std::cout << "\033[1;31m \\ \\   __  \\\033[0m \\  \\\\\\  \\ \033[1;32m\\  \\\033[0m\n";
   std::cout << "\033[1;31m  \\ \\  \\ \\  \\\033[0m \\  \\\\\\  \\ \033[1;32m\\  \\____\033[0m\n";
   std::cout << "\033[1;31m   \\ \\__\\ \\__\\\033[0m \\_______\\ \033[1;32m\\_______\\\033[0m\n";
