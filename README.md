@@ -49,7 +49,7 @@ cd AoC
 Using CMake (recommended):
 
 ```bash
-cmake -S . -B Build
+cmake -S . -B build
 cmake --build build
 ```
 
@@ -62,7 +62,8 @@ g++ src/main.cpp -o aoc_runner -std=c++20
 ### 3. Run the Solution Navigator
 
 ```bash
-./build/aoc
+cd build
+./aoc
 # or, if compiled directly:
 ./aoc_runner
 ```
