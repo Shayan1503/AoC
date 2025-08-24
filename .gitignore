@@ -1,7 +1,6 @@
-# vscode files
+# IDE/editor files
 .vscode/*
+.idea/*
 
-# executables
-a*
-part*
-main*
+# build folder
+build/*
