@@ -94,7 +94,8 @@ Contributions are welcome! To contribute:
 1. **Add your solution** or improvement, following the project structure.
 1. **Test** your changes.
 1. **Open a Pull Request** with a clear description of your changes.
-   If you have suggestions, bug reports, or want to discuss ideas, feel free to open an issue.
+
+If you have suggestions, bug reports, or want to discuss ideas, feel free to open an issue.
 
 ---
 
