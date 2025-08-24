@@ -9,7 +9,6 @@
 #include <vector>
 
 class Aoi {
-  // Your original colored text methods
   inline ftxui::Element a_text(std::string s) {
     return ftxui::text(s) | ftxui::bold | ftxui::color(ftxui::Color::Red);
   }
@@ -20,7 +19,6 @@ class Aoi {
     return ftxui::text(s) | ftxui::bold | ftxui::color(ftxui::Color::Green);
   }
 
-  // Convert showBanner() to return an Element instead of printing
   ftxui::Element getBannerElement() {
     using namespace ftxui;
     return vbox({hbox({a_text(" ________  "), o_text("________  "),
