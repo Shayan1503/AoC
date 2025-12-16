@@ -5,7 +5,9 @@ project(AoC VERSION 1.0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(aoc src/main.cpp)
+file(GLOB_RECURSE SOLUTION_SOURCES "src/solutions/*.cpp")
+add_executable(aoc src/main.cpp ${SOLUTION_SOURCES})
+target_compile_definitions(aoc PRIVATE PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
 
 install(TARGETS aoc DESTINATION bin)
 

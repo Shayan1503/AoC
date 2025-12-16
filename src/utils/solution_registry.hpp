@@ -17,7 +17,8 @@ inline void registerSolution(int year, int day, int part,
   getSolutionRegistry()[{year, day, part}] = factory;
 }
 
-std::unique_ptr<Solution> makeSolution(int year, int day, int part, int mode) {
+inline std::unique_ptr<Solution> makeSolution(int year, int day, int part,
+                                              int mode) {
   auto &registry = getSolutionRegistry();
   auto it = registry.find({year, day, part});
 
@@ -28,7 +29,7 @@ std::unique_ptr<Solution> makeSolution(int year, int day, int part, int mode) {
   return nullptr;
 }
 
-std::map<int, std::map<int, std::vector<int>>> getAvailableSolutions() {
+inline std::map<int, std::map<int, std::vector<int>>> getAvailableSolutions() {
   auto &registry = getSolutionRegistry();
   std::map<int, std::map<int, std::vector<int>>> solutions_map = {};
   for (const auto &entry : registry) {

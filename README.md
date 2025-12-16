@@ -73,15 +73,31 @@ cd build
 - Select the **year**, **day**, and **part** using the menu.
 - Press **Verify Selection** to run the chosen solution.
 - View the result and execution time in the terminal.
+- Toggle between **Test Input** and **Real Input**.
+
+### 5. CLI Usage
+
+You can also run solutions directly from the command line without the UI:
+
+```bash
+# Usage: ./aoc <Year> <Day> <Part> [Mode]
+# Mode: 0 = Test Input (default), 1 = Real Input
+
+# Run 2023 Day 1 Part 1 with Test Input
+./build/aoc 2023 1 1
+
+# Run 2023 Day 1 Part 2 with Real Input
+./build/aoc 2023 1 2 1
+```
 
 ---
 
 ## Adding New Solutions
 
-1. Create a new header (e.g. [part1.hpp](./src/solutions/2023/Day1/par1.hpp)) in the appropriate `DayX` folder.
+1. Create a new file (e.g. [part1.cpp](./src/solutions/2023/Day1/part1.cpp)) in the appropriate `DayX` folder.
 1. Inherit from the `Solution` base class and implement the `solve()` method.
 1. Register your solution using the `REGISTER_SOLUTION` macro.
-1. Include your header in [utils/all_solutions.hpp](./src/utils/all_solutions.hpp).
+1. Re-run CMake to detect the new file (if needed).
 
 ---
 

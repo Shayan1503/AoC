@@ -1,12 +1,15 @@
 #pragma once
 
-#include "../utils/all_solutions.hpp"
-#include "../utils/solution_registry.cpp"
+#include "../utils/solution_registry.hpp"
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <string>
 #include <vector>
+
+#include <atomic>
+#include <chrono>
+#include <thread>
 
 class Aoi {
   inline ftxui::Element a_text(std::string s) {
@@ -19,28 +22,96 @@ class Aoi {
     return ftxui::text(s) | ftxui::bold | ftxui::color(ftxui::Color::Green);
   }
 
+  // Frame counter for animation
+  int tree_frame = 0;
+
+  ftxui::Element getTreeElement() {
+    using namespace ftxui;
+    auto l = [&](int id, std::string c) {
+      bool on = ((tree_frame + id) % 4 == 0);
+      Color kColor = Color::Green3;
+      if (on) {
+        if (id % 3 == 0)
+          kColor = Color::Red;
+        else if (id % 3 == 1)
+          kColor = Color::Gold1;
+        else
+          kColor = Color::SkyBlue1;
+      }
+      return text(c) | bold | color(kColor);
+    };
+
+    auto g = [&](std::string s) { return text(s) | color(Color::Green1); };
+    auto s = [&](std::string s) {
+      return text(s) | color(Color::Green3);
+    }; // Darker green
+    auto t = [&](std::string s) {
+      return text(s) | color(Color::RGB(139, 69, 19));
+    }; // SaddleBrown
+
+    return vbox(
+        hbox({text("           "), l(0, "*")}),
+        hbox({text("          "), g("/"), l(1, "|"), g("\\")}),
+        hbox(
+            {text("         "), g("/"), l(2, "o"), g("."), l(3, "'"), g("\\")}),
+        hbox({text("        "), g("/"), s("."), l(4, "@"), g("."), s("'"),
+              l(5, "*"), g("\\")}),
+        hbox({text("       "), g("/"), l(6, "&"), g("."), s("'"), l(7, "o"),
+              g("."), s("~"), l(8, "+"), g("\\")}),
+        hbox({text("      "), g("/"), s("."), l(9, "*"), g("."), s("'"),
+              l(10, "@"), g("."), s("^"), l(11, "o"), g("."), g("\\")}),
+        hbox({text("     "), g("/"), l(12, "o"), g("."), s("~"), l(13, "&"),
+              g("."), s("*"), l(14, "+"), g("."), s("'"), l(15, "@"), s("'"),
+              g("\\")}),
+        hbox({text("    "), g("/"), s("."), l(16, "*"), g("."), s("'"),
+              l(17, "o"), g("."), s("^"), l(18, "&"), g("."), s("~"),
+              l(19, "*"), g("."), s("'"), g("\\")}),
+        hbox({text("   "), g("/"), l(20, "&"), g("."), s("~"), l(21, "@"),
+              g("."), s("*"), l(22, "o"), g("."), s("'"), l(23, "+"), g("."),
+              s("^"), l(24, "&"), s("'"), l(44, "#"), g("\\")}),
+        hbox({text("  "), g("/"),     s("."),     l(25, "o"), g("."),
+              s("'"),     l(26, "*"), g("."),     s("^"),     l(27, "@"),
+              g("."),     s("~"),     l(28, "o"), g("."),     s("'"),
+              l(29, "*"), g("."),     s("~"),     s(","),     g("\\")}),
+        hbox({text(" "), g("/"), l(30, "@"), g("."), s("~"), l(31, "&"),
+              g("."),    s("*"), l(32, "+"), g("."), s("'"), l(33, "o"),
+              g("."),    s("^"), l(34, "&"), g("."), s("~"), l(35, "@"),
+              g("."),    s("'"), l(36, "*"), g("\\")}),
+        hbox({text(""),   g("/"), s("."), l(37, "*"), g("."), s("'"),
+              l(38, "o"), g("."), s("^"), l(39, "&"), g("."), s("~"),
+              l(40, "*"), g("."), s("'"), l(41, "@"), g("."), s("^"),
+              l(42, "o"), g("."), s("~"), l(43, "&"), g("."), g("\\")}),
+        hbox({text("       "), t("[_______]")}),
+        hbox({text("         "), t("\\___/")}));
+  }
+
   ftxui::Element getBannerElement() {
     using namespace ftxui;
-    return vbox({hbox({a_text(" ________  "), o_text("________  "),
-                       c_text("________")}),
-                 hbox({a_text("|\\   __  \\"), o_text("|\\   __  \\"),
-                       c_text("|\\   ____\\")}),
-                 hbox({a_text("\\ \\  \\|\\  \\ "), o_text("\\  \\|\\  \\ "),
-                       c_text("\\  \\___|")}),
-                 hbox({a_text(" \\ \\   __  \\"), o_text(" \\  \\\\\\  \\"),
-                       c_text(" \\  \\")}),
-                 hbox({a_text("  \\ \\  \\ \\  \\"), o_text(" \\  \\\\\\  \\"),
-                       c_text(" \\  \\____")}),
-                 hbox({a_text("   \\ \\__\\ \\__\\"), o_text(" \\_______\\"),
-                       c_text(" \\_______\\")}),
-                 hbox({a_text("    \\|__|\\|__|"), o_text("\\|_______|"),
-                       c_text("\\|_______|")}),
-                 separator(),
-                 paragraph(
-                     "Welcome! I have tried my hand at solving Advent of "
-                     "Code problems throughout the years. This interface is "
-                     "a way to navigate through my solutions. You can press "
-                     "ESC anytime to close this interface.")}) |
+    return vbox({vbox({hbox({a_text(" ________  "), o_text("________  "),
+                             c_text("________")}),
+                       hbox({a_text("|\\   __  \\"), o_text("|\\   __  \\"),
+                             c_text("|\\   ____\\")}),
+                       hbox({a_text("\\ \\  \\|\\  \\ "),
+                             o_text("\\  \\|\\  \\ "), c_text("\\  \\___|")}),
+                       hbox({a_text(" \\ \\   __  \\"),
+                             o_text(" \\  \\\\\\  \\"), c_text(" \\  \\")}),
+                       hbox({a_text("  \\ \\  \\ \\  \\"),
+                             o_text(" \\  \\\\\\  \\"), c_text(" \\  \\____")}),
+                       hbox({a_text("   \\ \\__\\ \\__\\"),
+                             o_text(" \\_______\\"), c_text(" \\_______\\")}),
+                       hbox({a_text("    \\|__|\\|__|"), o_text("\\|_______|"),
+                             c_text("\\|_______|")}),
+                       separator(),
+                       paragraph(
+                           "Welcome! I have tried my hand at solving Advent of "
+                           "Code problems throughout the years. This interface "
+                           "is "
+                           "a way to navigate through my solutions. You can "
+                           "press "
+                           "ESC anytime to close this interface.")}),
+                 filler(), getTreeElement() | center,
+                 text("Happy Holidays!") | bold | color(Color::Gold1) |
+                     center}) |
            border | size(ftxui::WIDTH, ftxui::EQUAL, 40);
   }
 
@@ -49,6 +120,7 @@ public:
     using namespace ftxui;
 
     int selected_year = -1, selected_day = -1, selected_part = -1;
+    // ... (rest of run() variables) ...
     std::vector<std::string> years_str;
     for (auto &[year, _] : solutions_map)
       years_str.push_back(std::to_string(year));
@@ -68,6 +140,10 @@ public:
     int result = 0;
     float time = 0.0;
 
+    std::vector<std::string> modes_str = {"Test Input", "Real Input"};
+    int selected_mode = 0;
+    auto mode_toggle = Toggle(&modes_str, &selected_mode);
+
     auto verify_button = Button("Verify Selection", [&]() {
       if (selected_year != -1 && selected_day != -1 && selected_part != -1) {
         show_result = true;
@@ -75,7 +151,7 @@ public:
         int day = std::stoi(days_str[selected_day].substr(4));
         int part = std::stoi(parts_str[selected_part].substr(5));
 
-        auto solution = makeSolution(year, day, part, 0);
+        auto solution = makeSolution(year, day, part, selected_mode);
 
         if (solution) {
           std::pair<int, long long> output = solution->run();
@@ -86,6 +162,7 @@ public:
     });
 
     auto update_days = [&]() {
+      // ... existing update_days logic ...
       days_str.clear();
       selected_day = -1;
       parts_str.clear();
@@ -103,6 +180,7 @@ public:
     };
 
     auto update_parts = [&]() {
+      // ... existing update_parts logic ...
       parts_str.clear();
       selected_part = -1;
       show_result = false;
@@ -126,10 +204,11 @@ public:
 
     // Main container
     auto main_container = Container::Horizontal({Container::Vertical(
-        {menu_year, maybe_day, maybe_part, verify_button})});
+        {menu_year, maybe_day, maybe_part, mode_toggle, verify_button})});
 
     // Main renderer
     auto renderer = Renderer(main_container, [&]() -> Element {
+      // ... existing renderer logic ...
       day_enabled = (selected_year != -1);
       part_enabled = (selected_day != -1);
 
@@ -181,6 +260,8 @@ public:
            separator(),
 
            verify_button->Render() | center, separator(),
+           text("Input Mode") | center, mode_toggle->Render() | center,
+           separator(),
 
            show_result ? vbox({text("RESULT: " + std::to_string(result)) |
                                    bold | color(Color::Cyan),
@@ -199,6 +280,16 @@ public:
 
     // Event loop with change detection
     auto screen = ScreenInteractive::Fullscreen();
+
+    // Animation thread
+    std::atomic<bool> running(true);
+    std::thread animation_thread([&] {
+      while (running) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        screen.PostEvent(Event::Custom);
+        tree_frame++;
+      }
+    });
 
     auto final_renderer =
         Renderer(Container::Vertical({renderer}), [&]() -> Element {
@@ -221,11 +312,12 @@ public:
         screen.Exit();
         return true;
       }
-
       return false;
     });
 
     screen.Loop(event_handler);
+    running = false;
+    animation_thread.join();
   }
 };
 ;

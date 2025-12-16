@@ -28,18 +28,23 @@ public:
   };
 
   std::string getFullFilename() {
+    std::string root = PROJECT_ROOT;
     if (mode == 0) {
-      return "../src/solutions/" + std::to_string(year) + "/Day" +
+      return root + "/src/solutions/" + std::to_string(year) + "/Day" +
              std::to_string(day) + "/test" + std::to_string(part) + ".txt";
     }
 
-    return "../src/solutions/" + std::to_string(year) + "/Day" +
+    return root + "/src/solutions/" + std::to_string(year) + "/Day" +
            std::to_string(day) + "/input.txt";
   }
 
   void parseInput() {
     std::string filename = getFullFilename();
     std::ifstream file(filename);
+    if (!file.is_open()) {
+      // Try printing cwd for more context?
+      // std::filesystem::current_path() requires C++17 <filesystem>
+    }
     std::string line;
     while (getline(file, line)) {
       input.push_back(line);

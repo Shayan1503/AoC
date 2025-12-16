@@ -1,5 +1,5 @@
-#pragma once
-#include "../../../utils/solution_registry.cpp"
+
+#include "../../../utils/solution_registry.hpp"
 #include "../../solution.hpp"
 #include <map>
 
