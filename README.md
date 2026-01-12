@@ -81,7 +81,7 @@ You can also run solutions directly from the command line without the UI:
 
 ```bash
 # Usage: ./aoc <Year> <Day> <Part> [Mode]
-# Mode: 0 = Test Input (default), 1 = Real Input
+# Mode: 0 = Test Input, 1 = Real Input (default)
 
 # Run 2023 Day 1 Part 1 with Test Input
 ./build/aoc 2023 1 1

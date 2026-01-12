@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     int year = std::stoi(argv[1]);
     int day = std::stoi(argv[2]);
     int part = std::stoi(argv[3]);
-    int mode = 0; // Default to test mode
+    int mode = 1; // Default to real input mode
     if (argc >= 5) {
       mode = std::stoi(argv[4]);
     }

@@ -12,13 +12,11 @@ inline std::map<SolutionKey, SolutionFactory> &getSolutionRegistry() {
   return registry;
 }
 
-inline void registerSolution(int year, int day, int part,
-                             SolutionFactory factory) {
+inline void registerSolution(int year, int day, int part, SolutionFactory factory) {
   getSolutionRegistry()[{year, day, part}] = factory;
 }
 
-inline std::unique_ptr<Solution> makeSolution(int year, int day, int part,
-                                              int mode) {
+inline std::unique_ptr<Solution> makeSolution(int year, int day, int part, int mode) {
   auto &registry = getSolutionRegistry();
   auto it = registry.find({year, day, part});
 

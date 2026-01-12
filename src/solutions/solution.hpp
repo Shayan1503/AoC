@@ -1,5 +1,6 @@
 #pragma once
 #include <chrono>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -42,8 +43,10 @@ public:
     std::string filename = getFullFilename();
     std::ifstream file(filename);
     if (!file.is_open()) {
-      // Try printing cwd for more context?
-      // std::filesystem::current_path() requires C++17 <filesystem>
+      std::cerr << "Input file is not present at location: " << filename << "\n";
+      std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
+
+      // NOTE: figure out a way to show error messages in the terminal UI
     }
     std::string line;
     while (getline(file, line)) {

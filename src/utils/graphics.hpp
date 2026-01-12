@@ -120,7 +120,6 @@ public:
     using namespace ftxui;
 
     int selected_year = -1, selected_day = -1, selected_part = -1;
-    // ... (rest of run() variables) ...
     std::vector<std::string> years_str;
     for (auto &[year, _] : solutions_map)
       years_str.push_back(std::to_string(year));
@@ -141,7 +140,7 @@ public:
     float time = 0.0;
 
     std::vector<std::string> modes_str = {"Test Input", "Real Input"};
-    int selected_mode = 0;
+    int selected_mode = 1;
     auto mode_toggle = Toggle(&modes_str, &selected_mode);
 
     auto verify_button = Button("Verify Selection", [&]() {
@@ -162,7 +161,6 @@ public:
     });
 
     auto update_days = [&]() {
-      // ... existing update_days logic ...
       days_str.clear();
       selected_day = -1;
       parts_str.clear();
@@ -180,7 +178,6 @@ public:
     };
 
     auto update_parts = [&]() {
-      // ... existing update_parts logic ...
       parts_str.clear();
       selected_part = -1;
       show_result = false;
@@ -208,7 +205,6 @@ public:
 
     // Main renderer
     auto renderer = Renderer(main_container, [&]() -> Element {
-      // ... existing renderer logic ...
       day_enabled = (selected_year != -1);
       part_enabled = (selected_day != -1);
 
@@ -278,7 +274,6 @@ public:
              size(WIDTH, GREATER_THAN, 100);
     });
 
-    // Event loop with change detection
     auto screen = ScreenInteractive::Fullscreen();
 
     // Animation thread
@@ -287,7 +282,12 @@ public:
       while (running) {
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
         screen.PostEvent(Event::Custom);
-        tree_frame++;
+
+        if (tree_frame > 600) {
+          tree_frame = 0;
+        } else {
+          tree_frame++;
+        }
       }
     });
 
