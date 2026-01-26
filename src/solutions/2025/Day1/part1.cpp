@@ -16,9 +16,9 @@ public:
             int distance = std::stoi(text.substr(1));
             
             if (direction == 'L') {
-                current_pos = current_pos - distance;
+                current_pos -= distance;
             } else {
-                current_pos = current_pos + distance;
+                current_pos += distance;
             }
             current_pos = (current_pos + 100) % 100;
             

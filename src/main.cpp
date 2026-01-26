@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
     if (argc < 4) {
       std::cerr << "Usage: " << argv[0] << " <Year> <Day> <Part> [Mode]"
                 << std::endl;
-      std::cerr << "  Mode: 0 = Test Input (default), 1 = Real Input"
+      std::cerr << "  Mode: 0 = Test Input, 1 = Real Input (default)"
                 << std::endl;
       return 1;
     }
@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     int year = std::stoi(argv[1]);
     int day = std::stoi(argv[2]);
     int part = std::stoi(argv[3]);
-    int mode = 1; // Default to real input mode
+    int mode = 1; // Default
     if (argc >= 5) {
       mode = std::stoi(argv[4]);
     }
