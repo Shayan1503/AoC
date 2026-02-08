@@ -1,4 +1,3 @@
-
 #include "../../../utils/solution_registry.hpp"
 #include "../../solution.hpp"
 #include <map>
@@ -35,7 +34,7 @@ public:
     return true;
   }
 
-  int solve() override {
+  std::size_t solve() override {
     int sum = 0;
     int game = 1;
 

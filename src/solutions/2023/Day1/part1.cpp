@@ -1,4 +1,3 @@
-
 #include "../../../utils/solution_registry.hpp"
 #include "../../solution.hpp"
 
@@ -7,7 +6,7 @@ public:
   Day1Part1_2023() : Solution(2023, 1, 1) {}
   Day1Part1_2023(int mode) : Solution(2023, 1, 1, mode) {}
 
-  int solve() override {
+  std::size_t solve() override {
     int sum = 0;
     for (const auto &text : input) {
       int n = text.size();

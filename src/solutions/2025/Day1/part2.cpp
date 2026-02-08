@@ -6,7 +6,7 @@ public:
     Day1Part2_2025() : Solution(2025, 1, 2) {}
     Day1Part2_2025(int mode) : Solution(2025, 1, 2, mode) {}
 
-    int solve() override {
+    std::size_t solve() override {
         int counter = 0;
         int current_pos = 50;
         int next_pos = 0;

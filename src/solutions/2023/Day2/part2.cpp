@@ -1,4 +1,3 @@
-
 #include "../../../utils/solution_registry.hpp"
 #include "../../solution.hpp"
 
@@ -59,7 +58,7 @@ public:
     return minimum_cubes[0] * minimum_cubes[1] * minimum_cubes[2];
   }
 
-  int solve() override {
+  std::size_t solve() override {
     int sum = 0;
 
     for (auto &line : input) {

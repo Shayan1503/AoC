@@ -23,7 +23,7 @@ public:
   int getDay() const { return day; }
   int getPart() const { return part; }
 
-  virtual int solve() {
+  virtual std::size_t solve() {
     std::cout << "Solving..." << std::endl;
     return 0;
   };
@@ -54,18 +54,18 @@ public:
     }
   }
 
-  std::pair<int, long long> run() {
+  std::pair<std::size_t, long long> run() {
     parseInput();
 
     auto start = std::chrono::high_resolution_clock::now();
-    int result = solve();
+    std::size_t result = solve();
     auto end = std::chrono::high_resolution_clock::now();
 
     long long time_taken =
         std::chrono::duration_cast<std::chrono::nanoseconds>(end - start)
             .count();
 
-    std::pair<int, long long> output{result, time_taken};
+    std::pair<std::size_t, long long> output{result, time_taken};
     return output;
   }
 

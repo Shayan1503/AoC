@@ -136,7 +136,7 @@ public:
     auto maybe_part = Maybe(menu_part, &part_enabled);
 
     bool show_result = false;
-    int result = 0;
+    std::size_t result = 0;
     float time = 0.0;
 
     std::vector<std::string> modes_str = {"Test Input", "Real Input"};
@@ -153,7 +153,7 @@ public:
         auto solution = makeSolution(year, day, part, selected_mode);
 
         if (solution) {
-          std::pair<int, long long> output = solution->run();
+          std::pair<std::size_t, long long> output = solution->run();
           result = output.first;
           time = output.second / 1000.0f;
         }

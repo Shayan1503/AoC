@@ -52,7 +52,7 @@ public:
     return left * 10 + right;
   }
 
-  int solve() override {
+  std::size_t solve() override {
     int sum = 0;
 
     for (const auto &line : input) {
