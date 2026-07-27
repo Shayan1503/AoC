@@ -28,7 +28,7 @@ A collection of my solutions to [Advent of Code](https://adventofcode.com/) chal
 
 ## Prerequisites
 
-- C++20 compatible compiler (e.g., `g++`, `clang++`)
+- C++20 compatible compiler (Clang recommended, e.g., `clang++`)
 - [CMake](https://cmake.org/) (version 3.14+ recommended)
 - Unix-like environment (Linux or macOS)
 - Internet connection (for first-time FTXUI dependency fetch)
@@ -53,10 +53,10 @@ cmake -S . -B build
 cmake --build build
 ```
 
-Or, compile directly (for quick testing):
+Or, compile directly with Clang (for quick testing):
 
 ```bash
-g++ src/main.cpp -o aoc_runner -std=c++20
+clang++ src/main.cpp -o aoc_runner -std=c++20
 ```
 
 ### 3. Run the Solution Navigator

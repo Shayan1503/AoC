@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.14)
 
 project(AoC VERSION 1.0)
 
+if(NOT DEFINED CMAKE_C_COMPILER)
+  set(CMAKE_C_COMPILER /usr/bin/clang)
+endif()
+
+if(NOT DEFINED CMAKE_CXX_COMPILER)
+  set(CMAKE_CXX_COMPILER /usr/bin/clang++)
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
